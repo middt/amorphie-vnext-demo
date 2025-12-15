@@ -9,4 +9,5 @@ numReplicas = 1
 sleepApplication = true
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10
+startCommand = "/bin/sh -c 'gunicorn api.main:app -w 2 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:${PORT:-8000} --timeout 120'"
 
