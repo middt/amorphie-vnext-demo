@@ -1,0 +1,13 @@
+[build]
+builder = "dockerfile"
+dockerfilePath = "deployment/Dockerfile"
+
+[deploy]
+healthcheckPath = "/health"
+healthcheckTimeout = 120
+numReplicas = 1
+sleepApplication = false
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+startCommand = "beanie migrate -uri \"$MONGO_URI\" -db mediafusion -p migrations/ && gunicorn api.main:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT --timeout 120 --max-requests 500 --max-requests-jitter 200"
+
